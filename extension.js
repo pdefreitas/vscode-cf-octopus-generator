@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
 
+const CloudFormationTemplateFactory = require("./CloudFormationTemplateFactory");
 const OctopusParametersFile = require("./OctopusParametersFile");
 
 // this method is called when your extension is activated
@@ -31,7 +32,7 @@ function activate(context) {
       );
 
       let file_scheme = vscode.window.activeTextEditor.document.uri.scheme;
-
+        
       // check if the file is saved locally...
       if (file_scheme != "file") {
         vscode.window.showInformationMessage(
@@ -39,26 +40,12 @@ function activate(context) {
         );
         return;
       }
-      // get file contents (in text)
-      let file_contents = vscode.window.activeTextEditor.document.getText();
+      
       try {
-        // try to parse file contents
-        let file_object = JSON.parse(file_contents);
-        // initialize octopus parameters file object
-        let octopus_parameters_file = new OctopusParametersFile();
-        // loop through the parameters
-        for (let key in file_object.Parameters) {
-          octopus_parameters_file.addParameter(key, key);
-        }
-        // we don't want a parameters file without parameters...
-        if (octopus_parameters_file.count == 0) {
-          vscode.window.showInformationMessage(
-            "CloudFormation template doesn't have parameters."
-          );
-          return;
-        }
+        let cloudFormationTemplate = CloudFormationTemplateFactory.createTemplate(vscode.window.activeTextEditor.document);
+
         // retrieve octopus parameters file contens (in text)
-        let octopus_parameters_file_contents = octopus_parameters_file.stringify();
+        let octopus_parameters_file_contents = cloudFormationTemplate.stringify();
         // open new file with the parameters
         vscode.workspace
           .openTextDocument({
