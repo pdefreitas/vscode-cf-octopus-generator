@@ -15,6 +15,10 @@ This project is very experimental. It still is a working prototype.
 
 ## Release Notes
 
+### 0.0.2
+
+Improve the prototype to support YAML CloudFormation templates.
+
 ### 0.0.1
 
 Initial release of first working prototype.
