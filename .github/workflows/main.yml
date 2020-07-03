@@ -1,7 +1,7 @@
 on:
   push:
     branches: [ master ]
-name: Deploy extennsion
+name: Deploy extension
 jobs:
   deploy:
     runs-on: ubuntu-latest
