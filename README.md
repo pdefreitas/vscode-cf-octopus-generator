@@ -15,6 +15,10 @@ This project is very experimental. It still is a working prototype.
 
 ## Release Notes
 
+### 0.0.6
+
+Security patching of lodash.
+
 ### 0.0.5
 
 Security patching of lodash.
